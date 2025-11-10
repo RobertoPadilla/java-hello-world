@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrar Usuario</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    
+    .container {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      padding: 40px;
+      width: 100%;
+      max-width: 500px;
+    }
+    
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    
+    .nav-links {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .nav-links a {
+      color: #667eea;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 14px;
+    }
+    
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+      font-weight: 500;
+    }
+    
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    
+    button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    .message {
+      padding: 12px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    
+    .message.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .message.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Registrar Nuevo Usuario</h1>
+    <div class="nav-links">
+      <a href="/helloworld/">Inicio</a>
+      <a href="/helloworld/users.html">Ver usuarios</a>
+    </div>
+    
+    <div id="message" class="message"></div>
+    
+    <form id="registerForm">
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input 
+          type="text" 
+          id="nombre" 
+          name="nombre" 
+          required 
+          placeholder="Ingresa tu nombre"
+          minlength="2"
+          maxlength="100"
+        >
+      </div>
+      
+      <div class="form-group">
+        <label for="edad">Edad:</label>
+        <input 
+          type="number" 
+          id="edad" 
+          name="edad" 
+          required 
+          placeholder="Ingresa tu edad"
+          min="0"
+          max="150"
+        >
+      </div>
+      
+      <button type="submit">Registrar Usuario</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('registerForm');
+    const message = document.getElementById('message');
+    
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = 'message ' + type;
+      message.style.display = 'block';
+      
+      setTimeout(() => {
+        message.style.display = 'none';
+      }, 5000);
+    }
+    
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const nombre = document.getElementById('nombre').value;
+      const edad = document.getElementById('edad').value;
+      
+      const params = new URLSearchParams();
+      params.append('nombre', nombre);
+      params.append('edad', edad);
+      
+      try {
+        const response = await fetch('/helloworld/api/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: params.toString()
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          showMessage(data.message || 'Usuario registrado exitosamente', 'success');
+          form.reset();
+        } else {
+          showMessage(data.error || 'Error al registrar usuario', 'error');
+        }
+      } catch (error) {
+        showMessage('Error de conexión: ' + error.message, 'error');
+      }
+    });
+  </script>
+</body>
+</html>

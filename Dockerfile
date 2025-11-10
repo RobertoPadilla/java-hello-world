@@ -1,12 +1,17 @@
 # https://container-registry.oracle.com/
 FROM container-registry.oracle.com/middleware/weblogic:14.1.2.0-generic-jdk17-ol8-250424
 
+ARG ADMIN_USERNAME
+ARG ADMIN_PASSWORD
+
 ENV ORACLE_HOME=/u01/oracle \
     MW_HOME=/u01/oracle \
     WLST=/u01/oracle/oracle_common/common/bin/wlst.sh \
     DOMAIN_NAME=hello_domain \
     DOMAIN_HOME=/u01/oracle/user_projects/domains/hello_domain \
-    ADMIN_PORT=7001
+    ADMIN_PORT=7001 \
+    ADMIN_USERNAME=${ADMIN_USERNAME} \
+    ADMIN_PASSWORD=${ADMIN_PASSWORD}
 
 # WAR y script
 COPY target/helloworld.war /u01/oracle/apps/helloworld.war

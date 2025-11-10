@@ -1,0 +1,29 @@
+services:
+  app:
+    build: 
+      context: .
+      args:
+        ADMIN_USERNAME: weblogic
+        ADMIN_PASSWORD: Welcome1!
+    ports:
+      - "7001:7001"
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/appdb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+
+  postgres:
+    image: postgres:17
+    environment:
+      - POSTGRES_DB=appdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
