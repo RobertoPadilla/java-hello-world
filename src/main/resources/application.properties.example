@@ -1,0 +1,8 @@
+# Database Configuration (EXAMPLE - Copy to application.properties and update with real values)
+db.url=
+db.username=
+db.password=
+
+# Application Configuration
+app.name=Users WebLogic App
+app.version=1.0.0
