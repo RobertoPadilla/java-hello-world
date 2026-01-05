@@ -7,15 +7,15 @@ import java.sql.SQLException;
 public class DatabaseConnection {
   private static final String URL = System.getenv().getOrDefault(
       "SPRING_DATASOURCE_URL", 
-      "jdbc:postgresql://localhost:5432/appdb"
+      ""
   );
   private static final String USER = System.getenv().getOrDefault(
       "SPRING_DATASOURCE_USERNAME", 
-      "postgres"
+      ""
   );
   private static final String PASSWORD = System.getenv().getOrDefault(
       "SPRING_DATASOURCE_PASSWORD", 
-      "password"
+      ""
   );
 
   static {
