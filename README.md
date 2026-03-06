@@ -20,3 +20,4 @@ Puedes ejecutar el contenedor pasando las credenciales de administrador como var
 ```bash
 docker compose up -d
 ```
+
