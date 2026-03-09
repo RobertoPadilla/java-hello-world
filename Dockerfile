@@ -29,3 +29,4 @@ RUN ${WLST} /u01/oracle/create-domain.py \
 EXPOSE 7001
 WORKDIR ${DOMAIN_HOME}
 CMD ["bash","-lc","${DOMAIN_HOME}/startWebLogic.sh"]
+
