@@ -30,3 +30,4 @@ EXPOSE 7001
 WORKDIR ${DOMAIN_HOME}
 CMD ["bash","-lc","${DOMAIN_HOME}/startWebLogic.sh"]
 
+
